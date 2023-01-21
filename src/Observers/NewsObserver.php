@@ -15,7 +15,7 @@ class NewsObserver
     public function created(News $news): void
     {
         $this->getSubscribersForNotifications()
-            ->each(fn($subscriber): ?bool => $subscriber->notify(new NewsEmailNotification($news, $subscriber)));
+            ->each(fn ($subscriber): ?bool => $subscriber->notify(new NewsEmailNotification($news, $subscriber)));
     }
 
     protected function getSubscribersForNotifications(): Collection

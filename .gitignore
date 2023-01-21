@@ -27,3 +27,4 @@ yarn.lock
 /tests/manual/public/storage
 meetup-pgsql-data
 meetup
+*.DS_STORE

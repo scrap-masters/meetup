@@ -10,6 +10,6 @@ class ApiRouting extends Routing
 {
     public function wire(): void
     {
-        $this->router->middleware("auth:sanctum")->get("/user", fn(Request $request) => $request->user());
+        $this->router->middleware("auth:sanctum")->get("/user", fn (Request $request) => $request->user());
     }
 }

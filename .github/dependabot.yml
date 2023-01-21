@@ -7,6 +7,15 @@ updates:
       interval: monthly
       time: "07:30"
     commit-message:
-      prefix: "#26 - (php) "
+      prefix: "#2 - (php) "
     target-branch: main
-    open-pull-requests-limit: 1
+    open-pull-requests-limit: 2
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: monthly
+      time: "07:30"
+    commit-message:
+      prefix: "#2 - (npm) "
+    target-branch: main
+    open-pull-requests-limit: 2

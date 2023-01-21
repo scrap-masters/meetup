@@ -25,11 +25,11 @@ class RouteServiceProvider extends ServiceProvider
             $router->middleware("api")
                 ->prefix("api")
                 ->namespace($this->namespace)
-                ->group(fn() => new ApiRouting($router));
+                ->group(fn () => new ApiRouting($router));
 
             $router->middleware("web")
                 ->namespace($this->namespace)
-                ->group(fn() => new WebRouting($router));
+                ->group(fn () => new WebRouting($router));
         });
     }
 
@@ -37,13 +37,13 @@ class RouteServiceProvider extends ServiceProvider
     {
         RateLimiter::for(
             "api",
-            fn(Request $request) => Limit::perMinute(60)->by(
+            fn (Request $request) => Limit::perMinute(60)->by(
                 $request->user()?->id ?: $request->ip(),
             ),
         );
         RateLimiter::for(
             "web",
-            fn(Request $request): Limit => Limit::perMinute(60)->by(
+            fn (Request $request): Limit => Limit::perMinute(60)->by(
                 $request->user()?->id ?: $request->ip(),
             ),
         );

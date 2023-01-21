@@ -23,7 +23,7 @@ stop: ## Stop server http
 	docker-compose down --remove-orphans
 
 bash: ## Enter to bash a container php
-	docker-compose exec php ash
+	docker-compose exec php bash
 
 phpunit: ## Run tests
 	docker-compose exec php composer test
@@ -66,7 +66,11 @@ git-fix: ## Run cs-fix and eslint
 	$(MAKE) cs-fix
 	$(MAKE) eslint
 
+copy-index: ## Copy index.php to valid directory
+	cp -R ./tests/manual/public .
+
 init-sqllite: ## First setup for project (sqllite)
+	$(MAKE) copy-index
 	$(MAKE) install
 	$(MAKE) node-install
 	$(MAKE) node-build
@@ -78,6 +82,7 @@ init-sqllite: ## First setup for project (sqllite)
 	$(MAKE) db-seed
 
 init-postgres: ## First setup for project (postgres)
+	$(MAKE) copy-index
 	$(MAKE) install
 	$(MAKE) node-install
 	$(MAKE) node-build
