@@ -16,6 +16,6 @@ class BackButton extends Component
 
     public function render(): View
     {
-        return view((string)"components.back-button");
+        return view("components.back-button");
     }
 }

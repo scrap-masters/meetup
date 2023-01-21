@@ -20,6 +20,6 @@ class FormInput extends Component
 
     public function render(): View
     {
-        return view((string)"components.form-input");
+        return view("components.form-input");
     }
 }
