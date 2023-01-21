@@ -51,6 +51,6 @@
                 <i class="fa-brands fa-dribbble fa-xl"></i>
             </a>
         </div>
-        <p class="mt-8 text-center text-base">&copy; 2020 Workflow, Inc. All rights reserved.</p>
+        <p class="mt-8 text-center text-base">&copy; {{ now()->year }} Workflow, Inc. All rights reserved.</p>
     </div>
 </footer>

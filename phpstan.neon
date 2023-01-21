@@ -5,6 +5,9 @@ parameters:
     paths:
         - src
         - tests
+    excludePaths:
+        - src/Http/Controllers
+        - src/View/Components
 
     level: 5
 

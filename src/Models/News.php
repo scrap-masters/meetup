@@ -16,6 +16,8 @@ use Kyslik\ColumnSortable\Sortable;
  * @property int $id
  * @property int $userId
  * @property string $name
+ * @property string $slug
+ * @property string $title
  * @property string|null $text
  * @property string $logoPath
  * @property Carbon|null $createdAt
