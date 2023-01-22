@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Blumilk\Meetup\Core;
 
 use Blumilk\Meetup\Core\Http\Routing\WebRouting;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class MeetupServiceProvider extends ServiceProvider
@@ -14,15 +13,19 @@ class MeetupServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . "/../resources/views" => resource_path("views/vendor/meetup"),
+                __DIR__ . "/../resources/views" => resource_path("views"),
             ], "views");
+
+            $this->publishes([
+                dirname(__DIR__) . "/database/seeders" => database_path("seeders"),
+            ], "seeders");
 
             $this->publishes([
                 dirname(__DIR__) . "/database/migrations" => database_path("migrations"),
             ], "migrations");
 
             $this->publishes([
-                __DIR__ . "/../resources/static" => public_path("meetup"),
+                __DIR__ . "/../resources/static" => public_path("vendor/meetup"),
             ], "assets");
         }
     }
@@ -35,7 +38,7 @@ class MeetupServiceProvider extends ServiceProvider
 
     protected function registerConfigs(): void
     {
-        $configs = array_slice(scandir(__DIR__ . "/../config"),2);
+        $configs = array_slice(scandir(__DIR__ . "/../config"), 2);
 
         foreach ($configs as $config) {
             $this->mergeConfigFrom(
@@ -47,15 +50,6 @@ class MeetupServiceProvider extends ServiceProvider
 
     protected function registerRoutes(): void
     {
-        Route::group($this->routeConfiguration(), function () {
-            $this->loadRoutesFrom(__DIR__.'/../src/Http/Routing/WebRouting.php');
-        });
-    }
-
-    protected function routeConfiguration(): array
-    {
-        return [
-            'prefix' => config('meetup.prefix'),
-        ];
+        $this->app->get(WebRouting::class);
     }
 }
