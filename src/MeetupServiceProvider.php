@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace Blumilk\Meetup\Core;
 
+use Blumilk\Meetup\Core\Http\Routing\WebRouting;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class MeetupServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $this->loadMigrationsFrom(dirname(__DIR__) . "/database/migrations");
-        $this->loadViewsFrom(dirname(__DIR__) . "/resources/views", "cms");
-
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . "/../resources/views" => resource_path("views/vendor/meetup"),
@@ -31,11 +30,12 @@ class MeetupServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->registerConfigs();
+        $this->registerRoutes();
     }
 
     protected function registerConfigs(): void
     {
-        $configs = scandir(__DIR__ . "/../config");
+        $configs = array_slice(scandir(__DIR__ . "/../config"),2);
 
         foreach ($configs as $config) {
             $this->mergeConfigFrom(
@@ -43,5 +43,19 @@ class MeetupServiceProvider extends ServiceProvider
                 basename($config, ".php"),
             );
         }
+    }
+
+    protected function registerRoutes(): void
+    {
+        Route::group($this->routeConfiguration(), function () {
+            $this->loadRoutesFrom(__DIR__.'/../src/Http/Routing/WebRouting.php');
+        });
+    }
+
+    protected function routeConfiguration(): array
+    {
+        return [
+            'prefix' => config('meetup.prefix'),
+        ];
     }
 }
