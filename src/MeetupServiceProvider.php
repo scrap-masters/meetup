@@ -5,28 +5,35 @@ declare(strict_types=1);
 namespace Blumilk\Meetup\Core;
 
 use Blumilk\Meetup\Core\Http\Routing\WebRouting;
+use Blumilk\Meetup\Core\Models\User;
 use Blumilk\Meetup\Core\Traits\PublishesMigrations;
 use Illuminate\Support\ServiceProvider;
 
 class MeetupServiceProvider extends ServiceProvider
 {
     use PublishesMigrations;
+
+    private const PACKAGE_NAME = 'Meetup';
+
     public function boot(): void
     {
-
-
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . "/../resources/views" => resource_path("views"),
-            ], "views");
+            ], self::PACKAGE_NAME."-"."views");
 
             $this->publishes([
                 dirname(__DIR__) . "/database/seeders" => database_path("seeders"),
-            ], "seeders");
+            ], self::PACKAGE_NAME."-"."seeders");
+
+
+            $this->publishes([
+                dirname(__DIR__) . "/database/factories" => database_path("factories"),
+            ], self::PACKAGE_NAME."-"."factories");
 
             $this->publishes([
                 __DIR__ . "/../resources/static" => public_path("vendor/meetup"),
-            ], "assets");
+            ], self::PACKAGE_NAME."-"."assets");
 
             $this->publishMigrations();
             $this->publishConfigs();
