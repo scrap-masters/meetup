@@ -47,6 +47,7 @@ return [
         Laravel\Socialite\SocialiteServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
+        Blumilk\Meetup\Core\MeetupServiceProvider::class,
     ],
     "aliases" => [
         ...Facade::defaultAliases()->toArray(),
